@@ -1,0 +1,88 @@
+                    precision    recall  f1-score   support
+
+    ApplyEyeMakeup       0.48      0.57      0.52        44
+     ApplyLipstick       0.52      0.69      0.59        32
+           Archery       0.54      0.34      0.42        41
+      BabyCrawling       0.67      0.94      0.79        35
+      BandMarching       0.95      0.86      0.90        43
+     BaseballPitch       0.76      0.84      0.79        37
+        Basketball       0.48      0.43      0.45        35
+        BenchPress       0.90      0.79      0.84        48
+            Biking       0.81      0.79      0.80        33
+         Billiards       0.98      1.00      0.99        40
+       BlowDryHair       0.38      0.47      0.42        38
+    BlowingCandles       0.67      0.88      0.76        33
+           Bowling       1.00      0.88      0.94        43
+ BoxingPunchingBag       0.47      0.43      0.45        49
+      BreastStroke       0.92      0.82      0.87        28
+     BrushingTeeth       0.41      0.31      0.35        36
+      CleanAndJerk       0.39      0.73      0.51        33
+    CricketBowling       0.51      0.67      0.58        36
+       CricketShot       0.50      0.53      0.51        49
+  CuttingInKitchen       0.86      0.91      0.88        33
+            Diving       0.73      0.98      0.84        42
+          Drumming       0.94      0.67      0.78        43
+           Fencing       0.82      0.91      0.86        34
+FieldHockeyPenalty       0.48      0.68      0.56        40
+   FloorGymnastics       0.63      0.75      0.68        36
+      FrisbeeCatch       0.70      0.51      0.59        37
+         GolfSwing       0.64      0.47      0.54        30
+           Haircut       0.34      0.67      0.45        33
+       HammerThrow       0.54      0.98      0.69        45
+         Hammering       0.83      0.45      0.59        33
+       HeadMassage       0.66      0.56      0.61        41
+          HighJump       0.62      0.35      0.45        37
+       HorseRiding       0.98      0.96      0.97        49
+          HulaHoop       0.76      0.38      0.51        34
+        IceDancing       0.86      0.96      0.91        46
+      JavelinThrow       0.30      0.23      0.26        31
+     JugglingBalls       0.60      0.70      0.64        40
+          JumpRope       0.39      0.36      0.38        33
+       JumpingJack       0.77      0.54      0.63        37
+          Kayaking       0.69      0.61      0.65        36
+          Knitting       0.91      0.88      0.90        34
+          LongJump       0.74      0.64      0.68        39
+            Lunges       0.90      0.26      0.40        35
+            Mixing       0.76      0.76      0.76        45
+      MoppingFloor       0.56      0.74      0.63        34
+         Nunchucks       0.33      0.14      0.20        35
+      ParallelBars       0.66      0.89      0.76        37
+      PizzaTossing       0.42      0.42      0.42        33
+        PlayingDaf       0.92      0.56      0.70        41
+      PlayingFlute       0.77      0.98      0.86        48
+     PlayingGuitar       1.00      0.77      0.87        43
+      PlayingPiano       0.76      1.00      0.86        28
+      PlayingTabla       1.00      0.71      0.83        31
+     PlayingViolin       0.59      0.82      0.69        28
+         PoleVault       0.71      0.85      0.77        40
+       PommelHorse       0.76      0.56      0.64        34
+           PullUps       0.42      0.63      0.51        27
+             Punch       0.90      0.90      0.90        39
+           PushUps       0.50      0.50      0.50        30
+           Rafting       0.96      0.82      0.88        28
+RockClimbingIndoor       0.92      0.94      0.93        36
+            Rowing       0.71      0.97      0.82        36
+         SalsaSpin       0.89      0.40      0.55        43
+      ShavingBeard       0.51      0.42      0.46        43
+           Shotput       0.59      0.28      0.38        46
+     SkateBoarding       0.68      0.66      0.67        32
+            Skiing       0.53      0.75      0.62        40
+            Skijet       0.92      0.86      0.89        28
+         SkyDiving       0.76      1.00      0.86        31
+     SoccerPenalty       0.80      0.98      0.88        41
+     SumoWrestling       0.97      0.88      0.92        34
+           Surfing       0.86      0.94      0.90        33
+             Swing       1.00      0.44      0.61        41
+            TaiChi       0.59      0.36      0.44        28
+       TennisSwing       0.69      0.84      0.76        43
+       ThrowDiscus       0.41      0.37      0.39        38
+            Typing       0.80      0.95      0.87        43
+        UnevenBars       0.80      0.71      0.75        28
+ VolleyballSpiking       0.64      0.82      0.72        33
+    WalkingWithDog       0.57      0.47      0.52        34
+    WritingOnBoard       0.84      0.96      0.90        45
+              YoYo       0.63      0.33      0.44        36
+
+          accuracy                           0.68      3044
+         macro avg       0.70      0.68      0.67      3044
+      weighted avg       0.70      0.68      0.67      3044

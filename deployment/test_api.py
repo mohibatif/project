@@ -15,7 +15,13 @@ def test_prediction():
     url = f"{BASE_URL}/predict"
     # Example input feature payload (floats)
     payload = {
-        "features": [1.0, 2.0, 3.5, 4.2, 0.5]
+        "raw_data": {
+            "feature_1": 1.0,
+            "feature_2": 2.0,
+            "feature_3": 3.5,
+            "feature_4": 4.2,
+            "feature_5": 0.5
+        }
     }
     response = requests.post(url, json=payload)
     print(f"Predict status code: {response.status_code}")

@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ANN Lab Final Project — Human Activity Recognition using CNN-LSTM architectures on UCF-101 dataset. Interactive dashboard comparing MobileNetV2-LSTM, EfficientNet-BiLSTM, and Fine-Tuned models.">
+  <title>Human Activity Recognition — ANN Lab Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ===== Navbar ===== -->
+  <nav class="navbar" id="navbar">
+    <div class="container navbar-inner">
+      <span class="navbar-brand">HAR Dashboard</span>
+      <ul class="navbar-links">
+        <li><a href="#predict">Predict</a></li>
+        <li><a href="#models">Models</a></li>
+        <li><a href="#training">Training</a></li>
+        <li><a href="#performance">Performance</a></li>
+        <li><a href="#performers">Highlights</a></li>
+        <li><a href="#distribution">F1 Chart</a></li>
+        <li><a href="#dataset">Dataset</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ===== Hero Section ===== -->
+  <section class="hero" id="hero">
+    <div class="container">
+      <h1 class="display">Human Activity<br>Recognition</h1>
+      <p class="hero-subtitle">
+        Deep learning pipeline comparing CNN-LSTM architectures on the UCF-101 dataset —
+        recognizing 82 human activities from video sequences.
+      </p>
+
+      <div class="stats-grid">
+        <div class="stat-card glass reveal">
+          <div class="stat-value gradient" data-count="3">0</div>
+          <div class="stat-label">Model Versions</div>
+        </div>
+        <div class="stat-card glass reveal">
+          <div class="stat-value gradient" data-count="82">0</div>
+          <div class="stat-label">Activity Classes</div>
+        </div>
+        <div class="stat-card glass reveal">
+          <div class="stat-value gradient" data-count="3044">0</div>
+          <div class="stat-label">Test Samples</div>
+        </div>
+        <div class="stat-card glass reveal">
+          <div class="stat-value gradient" data-count="68.27" data-suffix="%" data-decimals="2">0</div>
+          <div class="stat-label">Best Test Accuracy</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Model Comparison ===== -->
+  <section id="models">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="caption">Architecture Comparison</div>
+        <h2>Three Model Versions</h2>
+        <p>Iterative improvements from a basic MobileNetV2-LSTM baseline to an EfficientNet-BiLSTM with attention and fine-tuning.</p>
+      </div>
+
+      <div class="model-grid">
+        <!-- V1 -->
+        <div class="model-card glass best reveal">
+          <div class="model-name">Version 1</div>
+          <div class="model-tag">Best Test Accuracy</div>
+          <dl class="model-arch">
+            <div><dt>CNN Backbone</dt><dd>MobileNetV2</dd></div>
+            <div><dt>Temporal</dt><dd>LSTM</dd></div>
+            <div><dt>Attention</dt><dd>No</dd></div>
+            <div><dt>Fine-Tuned</dt><dd>No</dd></div>
+          </dl>
+          <div class="model-metrics">
+            <div>
+              <div class="model-metric-value">68.27%</div>
+              <div class="model-metric-label">Test Accuracy</div>
+            </div>
+            <div>
+              <div class="model-metric-value">89.50%</div>
+              <div class="model-metric-label">Val Accuracy</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- V2 -->
+        <div class="model-card glass reveal">
+          <div class="model-name">Version 2</div>
+          <div class="model-tag" style="background:rgba(96,165,250,0.12);color:var(--info)">Advanced Architecture</div>
+          <dl class="model-arch">
+            <div><dt>CNN Backbone</dt><dd>EfficientNet-B0</dd></div>
+            <div><dt>Temporal</dt><dd>BiLSTM</dd></div>
+            <div><dt>Attention</dt><dd>Yes</dd></div>
+            <div><dt>Fine-Tuned</dt><dd>No</dd></div>
+          </dl>
+          <div class="model-metrics">
+            <div>
+              <div class="model-metric-value">65.00%</div>
+              <div class="model-metric-label">Test Accuracy</div>
+            </div>
+            <div>
+              <div class="model-metric-value">91.33%</div>
+              <div class="model-metric-label">Val Accuracy</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- V2 Fine-Tuned -->
+        <div class="model-card glass reveal">
+          <div class="model-name">V2 Fine-Tuned</div>
+          <div class="model-tag" style="background:rgba(139,92,246,0.12);color:var(--accent-violet)">Best Val Accuracy</div>
+          <dl class="model-arch">
+            <div><dt>CNN Backbone</dt><dd>EfficientNet-B0</dd></div>
+            <div><dt>Temporal</dt><dd>BiLSTM</dd></div>
+            <div><dt>Attention</dt><dd>Yes</dd></div>
+            <div><dt>Fine-Tuned</dt><dd>Yes</dd></div>
+          </dl>
+          <div class="model-metrics">
+            <div>
+              <div class="model-metric-value">66.23%</div>
+              <div class="model-metric-label">Test Accuracy</div>
+            </div>
+            <div>
+              <div class="model-metric-value">94.31%</div>
+              <div class="model-metric-label">Val Accuracy</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Try It Yourself ===== -->
+  <section id="predict">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="caption">Live Inference</div>
+        <h2>Try It Yourself</h2>
+        <p>Upload a video and let the model predict which human activity is being performed.</p>
+      </div>
+
+      <div class="predict-layout reveal">
+        <!-- Left: Upload -->
+        <div class="predict-upload-col">
+          <div class="upload-zone glass" id="upload-zone">
+            <div class="upload-zone-content" id="upload-zone-content">
+              <div class="upload-icon">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                  <polyline points="17 8 12 3 7 8"/>
+                  <line x1="12" y1="3" x2="12" y2="15"/>
+                </svg>
+              </div>
+              <p class="upload-text">Drag & drop a video here</p>
+              <p class="upload-subtext">or click to browse · MP4, AVI, MOV</p>
+            </div>
+            <video class="upload-preview" id="upload-preview" muted loop></video>
+            <input type="file" id="video-input" accept="video/*" hidden>
+          </div>
+
+          <div class="predict-controls">
+            <div class="predict-model-select">
+              <label class="label" for="model-select">Model</label>
+              <select id="model-select" class="model-select">
+                <option value="v1">V1 — MobileNetV2 + LSTM (Best Test)</option>
+                <option value="v2">V2 — EfficientNet + BiLSTM + Attention</option>
+                <option value="v2ft">V2 Fine-Tuned (Best Val)</option>
+              </select>
+            </div>
+            <button class="predict-btn" id="predict-btn" disabled>
+              <span class="predict-btn-text">Predict Activity</span>
+              <div class="predict-spinner" id="predict-spinner"></div>
+            </button>
+          </div>
+        </div>
+
+        <!-- Right: Results -->
+        <div class="predict-results-col">
+          <div class="results-panel glass" id="results-panel">
+            <div class="results-empty" id="results-empty">
+              <div class="results-empty-icon">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="11" cy="11" r="8"/>
+                  <path d="M21 21l-4.35-4.35"/>
+                </svg>
+              </div>
+              <p>Upload a video and click <strong>Predict</strong> to see results</p>
+            </div>
+            <div class="results-content" id="results-content" style="display:none">
+              <div class="results-header">
+                <h3>Predictions</h3>
+                <span class="results-model-badge" id="results-model-badge"></span>
+              </div>
+              <ul class="results-list" id="results-list"></ul>
+            </div>
+            <div class="results-error" id="results-error" style="display:none">
+              <p id="results-error-text"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Training Curves ===== -->
+  <section id="training">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="caption">Training Progress</div>
+        <h2>Learning Curves</h2>
+        <p>Training and validation metrics across epochs for each model version.</p>
+      </div>
+
+      <div class="tabs reveal" id="curve-tabs">
+        <button class="tab-btn active" data-tab="curves-all">All Models</button>
+        <button class="tab-btn" data-tab="curves-v2">Version 2</button>
+        <button class="tab-btn" data-tab="curves-v2ft">V2 Fine-Tuned</button>
+      </div>
+
+      <!-- All Models -->
+      <div class="tab-panel active" id="curves-all">
+        <div class="curves-grid">
+          <div class="curve-card glass reveal">
+            <div class="label">Accuracy Comparison</div>
+            <img src="all_models_accuracy_comparison.png" alt="Training and validation accuracy comparison across all models" loading="lazy">
+          </div>
+          <div class="curve-card glass reveal">
+            <div class="label">Loss Comparison</div>
+            <img src="all_models_loss_comparison.png" alt="Training and validation loss comparison across all models" loading="lazy">
+          </div>
+        </div>
+      </div>
+
+      <!-- V2 -->
+      <div class="tab-panel" id="curves-v2">
+        <div class="curves-grid">
+          <div class="curve-card glass">
+            <div class="label">V2 — Accuracy</div>
+            <img src="V2/accuracy_curve_v2.png" alt="Version 2 training vs validation accuracy" loading="lazy">
+          </div>
+          <div class="curve-card glass">
+            <div class="label">V2 — Loss</div>
+            <img src="V2/loss_curve_v2.png" alt="Version 2 training vs validation loss" loading="lazy">
+          </div>
+        </div>
+      </div>
+
+      <!-- V2 Fine-Tuned -->
+      <div class="tab-panel" id="curves-v2ft">
+        <div class="curves-grid">
+          <div class="curve-card glass">
+            <div class="label">V2 Fine-Tuned — Accuracy</div>
+            <img src="V2-FineTune/accuracy_curve_v2_finetuned.png" alt="V2 Fine-Tuned training vs validation accuracy" loading="lazy">
+          </div>
+          <div class="curve-card glass">
+            <div class="label">V2 Fine-Tuned — Loss</div>
+            <img src="V2-FineTune/loss_curve_v2_finetuned.png" alt="V2 Fine-Tuned training vs validation loss" loading="lazy">
+          </div>
+        </div>
+      </div>
+
+      <!-- Confusion Matrices -->
+      <div class="section-header reveal" style="margin-top:var(--space-3xl)">
+        <div class="caption">Error Analysis</div>
+        <h2>Confusion Matrices</h2>
+      </div>
+      <div class="matrix-grid">
+        <div class="matrix-card glass reveal">
+          <div class="label">Version 2</div>
+          <img src="V2/confusion_matrix_v2.png" alt="Version 2 confusion matrix" loading="lazy">
+        </div>
+        <div class="matrix-card glass reveal">
+          <div class="label">V2 Fine-Tuned</div>
+          <img src="V2-FineTune/confusion_matrix_v2_finetuned.png" alt="V2 Fine-Tuned confusion matrix" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Per-Class Performance Table ===== -->
+  <section id="performance">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="caption">Per-Class Metrics</div>
+        <h2>Classification Performance</h2>
+        <p>Detailed precision, recall, and F1-score for all 82 activity classes. Click headers to sort.</p>
+      </div>
+
+      <div class="table-controls reveal">
+        <input type="text" class="search-input" id="class-search" placeholder="Search activity classes…" autocomplete="off">
+        <div class="toggle-group" id="model-toggle">
+          <button class="toggle-btn active" data-model="v1">Version 1</button>
+          <button class="toggle-btn" data-model="v2">Version 2</button>
+        </div>
+      </div>
+
+      <div class="table-wrapper glass-light reveal">
+        <table class="data-table" id="class-table">
+          <thead>
+            <tr>
+              <th data-sort="name">Class <span class="sort-icon">▲</span></th>
+              <th data-sort="precision">Precision <span class="sort-icon">▲</span></th>
+              <th data-sort="recall">Recall <span class="sort-icon">▲</span></th>
+              <th data-sort="f1">F1-Score <span class="sort-icon">▲</span></th>
+              <th data-sort="support">Support <span class="sort-icon">▲</span></th>
+            </tr>
+          </thead>
+          <tbody id="class-table-body"></tbody>
+        </table>
+      </div>
+      <div class="table-footer" id="table-footer">
+        <span id="table-count">Showing 82 classes</span>
+        <span id="table-summary"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Top / Bottom Performers ===== -->
+  <section id="performers">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="caption">Highlights</div>
+        <h2>Top & Bottom Performers</h2>
+        <p>Best and worst classes by F1-score for the selected model version.</p>
+      </div>
+
+      <div class="performers-grid reveal">
+        <div class="top">
+          <h3 style="color:var(--success);margin-bottom:var(--space-md)">🏆 Top 5</h3>
+          <ul class="performer-list" id="top-performers"></ul>
+        </div>
+        <div class="bottom">
+          <h3 style="color:var(--danger);margin-bottom:var(--space-md)">⚠ Bottom 5</h3>
+          <ul class="performer-list" id="bottom-performers"></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== F1 Distribution Chart ===== -->
+  <section id="distribution">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="caption">Metrics Distribution</div>
+        <h2>F1-Score Distribution</h2>
+        <p>F1-scores across all 82 classes, sorted highest to lowest.</p>
+      </div>
+      <div class="chart-container glass reveal">
+        <canvas id="f1-chart"></canvas>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Dataset Overview ===== -->
+  <section id="dataset">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="caption">Dataset</div>
+        <h2>UCF-101 Subset</h2>
+        <p>Class distribution across the training and evaluation splits.</p>
+      </div>
+      <div class="dataset-grid">
+        <div class="dataset-card glass reveal">
+          <div class="label">Total Videos per Class</div>
+          <img src="class_distribution.png" alt="Total number of videos per class" loading="lazy">
+        </div>
+        <div class="dataset-card glass reveal">
+          <div class="label">Training Samples per Class</div>
+          <img src="training_class_distribution.png" alt="Training samples per action class" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Footer ===== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-brand">HAR Dashboard</div>
+      <p>ANN Lab Final Project · 6th Semester · Human Activity Recognition on UCF-101</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

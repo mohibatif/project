@@ -91,22 +91,25 @@ Log metadata, metrics, and parameters from your Kaggle run into the MLflow track
 
 ---
 
-## 🔌 Running FastAPI
-Start the local prediction gateway using the Uvicorn ASGI server:
+## 🔌 Running FastAPI & Frontend Dashboard
+Start the local serving backend and host the integrated frontend dashboard:
 
 ```bash
-uvicorn deployment.app:app --host 0.0.0.0 --port 8000 --reload
+uvicorn deployment.app:app --reload
 ```
-*Once running, visit `http://127.0.0.1:8000/docs` to interact with the API using Swagger UI.*
+
+### Accessing the Project:
+* **Frontend Dashboard**: Navigate to [http://127.0.0.1:8000/](http://127.0.0.1:8000/) in your browser to view the Model Comparison and Live Video Inference dashboard.
+* **Interactive Swagger Documentation**: Visit [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs) to test API endpoints directly.
 
 ### API Endpoints
 The serving gateway exposes three core endpoints:
 
 | Method | Endpoint | Description |
 |---|---|---|
-| **GET** | `/` | Root endpoint displaying basic API status and metadata. |
-| **GET** | `/health` | Kubernetes probes endpoint checking if the server is healthy and if the model is loaded. |
-| **POST** | `/predict` | Predicts outputs from inputs. Includes custom `TODO` labels to map your specific preprocess features. |
+| **GET** | `/` | Serves the HTML frontend dashboard for browser clients, or a welcome JSON message for API clients. |
+| **GET** | `/health` | Kubernetes probes endpoint checking if the server is healthy. |
+| **POST** | `/predict` | Accept video uploads (`UploadFile`) and model selection (`Form` field: `v1` or `v2`) to run deep learning inference. |
 
 ### Test Predictions
 From a separate terminal, test the local server:
