@@ -1,0 +1,68 @@
+# =====================================================================
+# Kubernetes Deployment Configuration for Machine Learning API
+# =====================================================================
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  # Unique identifier name for this deployment resource inside the cluster
+  name: ml-api
+  labels:
+    # Metadata tags useful for querying and grouping resources
+    app: ml-api
+    tier: api
+spec:
+  # The desired state: spin up exactly 1 replica instance of the model serving container
+  replicas: 1
+  
+  # Selectors dictate how the deployment controller selects pods to manage
+  selector:
+    matchLabels:
+      app: ml-api
+      
+  # Template details defining how new Pods are spawned
+  template:
+    metadata:
+      labels:
+        # These labels must match the spec.selector.matchLabels exactly
+        app: ml-api
+    spec:
+      containers:
+      - name: ml-api-container
+        # Container image tag (replace 'model-serving:latest' with your registry URL in production)
+        image: model-serving:latest
+        
+        # imagePullPolicy configuration optimized for Minikube:
+        # - IfNotPresent: Pulls image only if it doesn't exist locally. Allows Minikube to use local builds.
+        # - Never: Forces Kubernetes to only use local images. Handy if building directly inside minikube docker-env.
+        imagePullPolicy: IfNotPresent
+        
+        # Expose the API port matching the Docker container port
+        ports:
+        - containerPort: 8000
+          name: api-port
+          
+        # Allocate cluster CPU and Memory resources to container for performance throttling
+        resources:
+          limits:
+            cpu: "1.0"      # Limit container to max 1 CPU core
+            memory: "1Gi"   # Limit container to max 1GB RAM
+          requests:
+            cpu: "0.5"      # Reserve minimum 0.5 CPU core on node
+            memory: "512Mi" # Reserve minimum 512MB RAM on node
+            
+        # Liveness probes check if the container needs to be restarted (if it hangs)
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 15 # Wait 15 seconds after start before probing
+          periodSeconds: 20       # Probe every 20 seconds
+          
+        # Readiness probes check if the container is ready to accept incoming user traffic
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 10 # Wait 10 seconds after start before probing
+          periodSeconds: 10       # Probe every 10 seconds

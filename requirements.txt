@@ -1,0 +1,25 @@
+# MLOps Project Dependencies (Stable for Python 3.11)
+
+# API Serving
+fastapi==0.109.0
+uvicorn==0.27.0
+pydantic==2.6.1
+python-multipart==0.0.9
+
+# ML / Data Science Stack
+scikit-learn==1.4.0
+pandas==2.2.0
+numpy==1.26.3
+joblib==1.3.2
+
+# Experiment Tracking and Registry
+mlflow==2.10.2
+
+# Infrastructure Integrations (Docker & Kubernetes Python SDKs)
+docker==7.0.0
+kubernetes==29.0.0
+
+# Testing and API Verification
+pytest==8.0.0
+httpx==0.26.0
+requests==2.31.0

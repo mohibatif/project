@@ -1,0 +1,47 @@
+# =====================================================================
+# GitHub Actions CI Automation Workflow
+# =====================================================================
+name: MLOps CI Verification Pipeline
+
+# Trigger this workflow only on push events to the 'main' branch
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  validate_imports:
+    # Use the latest Ubuntu runner hosted by GitHub
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the repository code into the runner workspace
+      - name: Checkout repository code
+        uses: actions/checkout@v3
+
+      # Step 2: Set up Python 3.11 environment in the runner
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+          # Caching dependencies speeds up workflow run times significantly
+          cache: "pip"
+
+      # Step 3: Install packages defined in requirements.txt
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      # Step 4: Verify that MLflow library imports successfully
+      - name: Verify MLflow Import
+        run: |
+          python -c "import mlflow; print('✓ MLflow package successfully imported')"
+
+      # Step 5: Verify that FastAPI library and deployment app import successfully
+      # This checks both FastAPI configuration and your specific app.py syntax
+      - name: Verify FastAPI and Application Imports
+        run: |
+          python -c "import fastapi; print('✓ FastAPI package successfully imported')"
+          # Add the project root to python path to resolve import references
+          PYTHONPATH=. python -c "from deployment.app import app; print('✓ FastAPI application imported successfully')"

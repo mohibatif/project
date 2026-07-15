@@ -1,0 +1,34 @@
+# =====================================================================
+# Kubernetes Service Configuration for Machine Learning API
+# =====================================================================
+
+apiVersion: v1
+kind: Service
+metadata:
+  # The identifier name of this service endpoint resource
+  name: ml-api-service
+  labels:
+    # Metadata tags for resource grouping and tracking
+    app: ml-api
+spec:
+  # NodePort type exposes the service on each Node's IP at a static port.
+  # This makes it accessible from outside the cluster (highly suitable for local minikube setups).
+  type: NodePort
+  
+  ports:
+  - name: http
+    # The port number exposed outside the cluster on the service itself
+    port: 8000
+    
+    # The port number inside the target container where the FastAPI server is running
+    targetPort: 8000
+    
+    # Optional NodePort range (30000-32767). If omitted, Kubernetes assigns a random one automatically.
+    # nodePort: 30080
+    
+    protocol: TCP
+    
+  # The selector defines which Pods this service routes network traffic to.
+  # This selector must match the labels ('app: ml-api') defined inside deployment.yaml.
+  selector:
+    app: ml-api

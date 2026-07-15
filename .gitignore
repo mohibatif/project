@@ -1,0 +1,73 @@
+# =====================================================================
+# Gitignore configuration for Python MLOps Projects
+# =====================================================================
+
+# 1. Python Cache and Compilation
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# 2. Virtual Environments
+venv/
+.venv/
+env/
+ENV/
+*env/
+*venv/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# 3. Environment Variables & Secrets
+.env
+.env.*
+.secrets
+secrets.*
+*.pem
+*.key
+*.passwd
+
+# 4. IDEs and Editors Configuration
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+*~
+
+# 5. MLOps (MLflow metadata and runs)
+mlruns/
+mlflow.db
+mlflow.db.bak
+
+# 6. Jupyter Notebook Checkpoints
+.ipynb_checkpoints
+*/.ipynb_checkpoints/
+*.ipynb
+
+# 7. Local Datasets and Model Binaries
+# Ignore all downloaded data and raw weights in tracking directories
+data/*
+!data/.gitkeep
+models/*
+!models/.gitkeep
+
+# 8. Temporary Files & Logs
+tmp/
+temp/
+*.log
+*.tmp
+*.bak
+
+# 9. Docker & OS Artifacts
+.docker/
+*docker-build/
+.DS_Store
+Thumbs.db
